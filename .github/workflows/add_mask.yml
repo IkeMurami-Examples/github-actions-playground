@@ -29,7 +29,7 @@ jobs:
       - name: do something with a secret
         id: do-smth
         run: |
-          some_value_1=$(echo $secret_env | md5sum);
+          some_value_1=$(echo $secret_env | md5sum | head -c 20);
           some_value_2=$(echo ${{ steps.generate-secret.outputs.secret }} | md5sum);
           echo "some_value=$some_value_1" >> $GITHUB_OUTPUT;
 
