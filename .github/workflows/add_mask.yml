@@ -10,7 +10,7 @@ jobs:
 
     outputs:
       secret: ${{ steps.generate-secret.outputs.secret }}
-      other: ${{ steps.do-smth.outputs.some_value_1 }}
+      other: ${{ steps.do-smth.outputs.some_value }}
 
     defaults:
       run:
