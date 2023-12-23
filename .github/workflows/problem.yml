@@ -1,0 +1,51 @@
+name: Check a problem
+
+on:
+  workflow_dispatch:
+
+jobs:
+  generate-secret:
+    name: Generate a secret
+    runs-on: ubuntu-latest
+
+    outputs:
+      secret: ${{ steps.generate-secret.outputs.secret }}
+
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - name: generate
+        id: generate-secret
+        run: |
+          random_value=$(echo $RANDOM | md5sum | head -c 20);
+
+          echo "secret=$random_value" >> $GITHUB_OUTPUT;
+          echo "secret_env=$random_value" >> $GITHUB_ENV;
+
+      - name: do something with a secret
+        run: |
+          some_value_1=$(echo $secret_env | md5sum);
+          some_value_2=$(echo ${{ steps.generate-secret.outputs.secret }} | md5sum);
+          echo "some_value=$some_value_1" >> $GITHUB_OUTPUT;
+
+  second-job:
+    name: Do something with a secret in an other job
+    runs-on: ubuntu-latest
+    needs: generate-secret
+
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - name: do something with a secret
+        run:
+          some_value=$(echo -n '${{ needs.generate-secret.outputs.secret }}');
+          echo "output=$some_value" >> /dev/null;
+      - name: try to use environments
+        run:
+          echo 'test';
+        env:
+          SOME_SECRET: ${{ needs.generate-secret.outputs.secret }}
