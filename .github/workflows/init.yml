@@ -1,0 +1,25 @@
+name: Check a problem
+
+on:
+  workflow_dispatch:
+
+jobs:
+  generate-secret:
+    name: Generate a secret
+    runs-on: ubuntu-latest
+
+    outputs:
+      secret: ${{ steps.generate-secret.outputs.secret }}
+
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - name: generate
+        id: generate-secret
+        run: |
+          random_value=$(echo $RANDOM | md5sum | head -c 20);
+
+          echo "secret=$random_value" >> $GITHUB_OUTPUT;
+          echo "secret_env=$random_value" >> $GITHUB_ENV;
