@@ -17,3 +17,7 @@ Playground to check working with Github actions
 
 Как себя ведут обычные секреты в Github Actions.
 
+## Первая попытка решить: add_mask.yml
+
+Добавляем маскирование секретов в логах: https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#example-masking-a-generated-output-within-a-single-job
+
