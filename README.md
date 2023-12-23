@@ -21,3 +21,25 @@ Playground to check working with Github actions
 
 Добавляем маскирование секретов в логах: https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#example-masking-a-generated-output-within-a-single-job
 
+Этот подход работает при передачи секретов между step'ами, но не позволяет передать секрет в другую job'у: секрет выпиливается из output'а. 
+
+У классического применения Github Secrets есть возможность прочитать один и тот же секрет через `secrets.SOME_SECRET`.
+
+## Двойное кодирование
+
+https://github.com/orgs/community/discussions/25225#discussioncomment-6776295
+
+
+
+## Вторая попытка: encryption.yml
+
+Шифруем на общем секрете для передачи между job'ами.
+
+Но как передать значение между workflow => шифрование не нужно, все таки нужно свое хранилище секретов.
+
+## Третья попытка: custom action
+
+Тут можно использовать как сторонние хранилища, например: hashicorp vault, а можно написать свой custom action, который будет класть секрет в Github Secrets.
+
++ Рассуждения, почему не получится через отдельный workflow (re-usable wf — это job'а, а значит снова попадаем в проблему как передать секрет между job'ами)
+
