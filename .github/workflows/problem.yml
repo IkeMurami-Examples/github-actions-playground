@@ -10,6 +10,7 @@ jobs:
 
     outputs:
       secret: ${{ steps.generate-secret.outputs.secret }}
+      other: ${{ steps.do-smth.outputs.some_value }}
 
     defaults:
       run:
@@ -25,8 +26,9 @@ jobs:
           echo "secret_env=$random_value" >> $GITHUB_ENV;
 
       - name: do something with a secret
+        id: do-smth
         run: |
-          some_value_1=$(echo $secret_env | md5sum);
+          some_value_1=$(echo $secret_env | md5sum | head -c 20);
           some_value_2=$(echo ${{ steps.generate-secret.outputs.secret }} | md5sum);
           echo "some_value=$some_value_1" >> $GITHUB_OUTPUT;
 
@@ -42,10 +44,11 @@ jobs:
     steps:
       - name: do something with a secret
         run:
-          some_value=$(echo -n '${{ needs.generate-secret.outputs.secret }}');
+          some_value=$(echo -n '${{ needs.generate-secret.outputs.secret }} x ${{ needs.generate-secret.outputs.other }}');
           echo "output=$some_value" >> /dev/null;
       - name: try to use environments
         run:
           echo 'test';
         env:
           SOME_SECRET: ${{ needs.generate-secret.outputs.secret }}
+          SOME_OTHER: ${{ needs.generate-secret.outputs.other }}
