@@ -1,4 +1,4 @@
-name: Check a problem (problem.yml)
+name: Check a problem (add_mask.yml)
 
 on:
   workflow_dispatch:
