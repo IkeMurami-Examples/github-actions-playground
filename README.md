@@ -1,6 +1,16 @@
 # github-actions-playground
 Playground to check working with Github actions
 
+## Статьи вспомогательные
+
+
+- https://stackoverflow.com/questions/75251487/passing-secrets-as-output-between-jobs-in-a-github-workflow
+- https://github.com/orgs/community/discussions/13082
+- https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions
+- Проверить двойное кодирование https://github.com/orgs/community/discussions/25225#discussioncomment-6776295
+
+
+
 ## init.yml
 
 У нас есть job'а (а точнее step в ней), которая генерирует секрет. И нам этот секрет надо передать в следующий step или следующую job'у.
