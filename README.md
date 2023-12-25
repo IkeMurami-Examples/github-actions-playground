@@ -25,7 +25,7 @@ Playground to check working with Github actions
 
 У классического применения Github Secrets есть возможность прочитать один и тот же секрет через `secrets.SOME_SECRET`.
 
-## Двойное кодирование
+## Двойное кодирование (double_encode.yml)
 
 https://github.com/orgs/community/discussions/25225#discussioncomment-6776295
 
@@ -36,6 +36,8 @@ https://github.com/orgs/community/discussions/25225#discussioncomment-6776295
 Шифруем на общем секрете для передачи между job'ами.
 
 Но как передать значение между workflow => шифрование не нужно, все таки нужно свое хранилище секретов.
+
+Если значение должно попадать в env'ы, то расшифровывать следует внутри step'а, так как при подстановки в env, значение будет видно
 
 ## Третья попытка: custom action
 
